@@ -16,6 +16,13 @@ module.exports = {
             body: template
         }
     },
+    RedirectToAction: function (redirectUrl) {
+        return {
+            statusCode: 301,
+            type: { "Context-Type": "text/html" },
+            redirect: redirectUrl,
+        }
+    },
     parseUrl: function (url) {
         var urlArr = url.slice(1).split("/");
         return {

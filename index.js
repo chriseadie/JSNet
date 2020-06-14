@@ -10,7 +10,6 @@ http.createServer((req, res) => {
             getRouter(req, res)
         }
     }
-
 }).listen(8080)
 const postRouter = (req, res) => {
     let body = []
@@ -40,5 +39,5 @@ const router = async (url, res, data) => {
             res.write(View("404.html"))
         }
     }
-    res.end()
+    return res.end()
 }
