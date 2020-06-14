@@ -42,6 +42,3 @@ const router = async (url, res, data) => {
     }
     res.end()
 }
-module.exports = {
-    router
-}
