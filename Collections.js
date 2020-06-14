@@ -38,7 +38,7 @@ class Dictionary {
 class HttpClient {
     constructor() {
     }
-    async get(url, callback) {
+    get(url, callback) {
         https.get(url, resp => {
             let data = '';
             resp.on("data", (chunk) => {
