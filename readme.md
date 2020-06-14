@@ -6,3 +6,6 @@ This server uses js classes with response types such as View() and Ok() in order
 It is still in the early stages of development
 
 Nunjucks has been included as the only dependency thus far to allow templating on html documents
+
+
+I am planing to turn this into a cli to make it much easer to manage and get started. creating action for initiating a project as well as adding controller or views
