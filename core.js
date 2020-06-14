@@ -37,5 +37,12 @@ module.exports = {
             type: { "Context-Type": "application/json" },
             body: JSON.stringify(json)
         }
+    },
+    BadRequest: function (response) {
+        return {
+            statusCode: 400,
+            type: { "Context-Type": "text/plain" },
+            body: JSON.stringify(response)
+        }
     }
 }

@@ -18,7 +18,7 @@ const postRouter = (req, res) => {
         body.push(chunk)
     }).on("end", () => {
         var data = Buffer.concat(body).toString();
-        router(req.url, res, data)
+        router(req.url, res, JSON.parse(data))
     })
 }
 

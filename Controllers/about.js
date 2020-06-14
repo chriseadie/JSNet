@@ -1,4 +1,4 @@
-const { View, Ok } = require("../core");
+const { View, Ok, BadRequest } = require("../core");
 
 class AboutController {
     index() {
@@ -10,7 +10,7 @@ class AboutController {
     }
     getCanidateById(id) {
         var obj = {
-            id: id[0],
+            hh: id,
             other: {
                 testing: "this works"
             }
