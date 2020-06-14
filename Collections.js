@@ -45,7 +45,7 @@ class HttpClient {
                 data += chunk
             })
             resp.on("end", () => {
-                callback(JSON.parse(data))
+                return callback(JSON.parse(data))
             })
         })
     }
@@ -67,7 +67,7 @@ class HttpClient {
                 data += chunk;
             });
             res.on("end", () => {
-                callback(JSON.parse(data));
+                return callback(JSON.parse(data));
             })
         });
         req.write(data)
