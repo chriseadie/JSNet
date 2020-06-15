@@ -15,8 +15,12 @@ const createResponseObject = (response, options) => {
         return response.write(options.body)
     }
 }
+const setDefaultHeaders = (response) => {
+    response.setHeader("x-powered-by", "JSNet")
+}
 module.exports = {
     createResponseObject,
+    setDefaultHeaders,
     parseUrl: function (url) {
         var urlArr = url.slice(1).split("/");
         return {

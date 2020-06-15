@@ -1,8 +1,15 @@
 const http = require("http");
 const { View } = require("./core")
-const { createResponseObject, parseUrl, fetchPublicAssets, } = require("./system");
+const { createResponseObject, parseUrl, fetchPublicAssets, setDefaultHeaders } = require("./system");
 
-http.createServer((req, res) => {
+http.createServer((request, response) => {
+    // added powered by header to response
+    setDefaultHeaders(response);
+    //adding router switch for defining get and post methods
+    routerSwitch(request, response);
+}).listen(8080)
+
+const routerSwitch = (req, res) => {
     if (req.method === "POST") {
         postRouter(req, res)
     } else {
@@ -10,7 +17,7 @@ http.createServer((req, res) => {
             getRouter(req, res)
         }
     }
-}).listen(8080)
+}
 const postRouter = (req, res) => {
     let body = []
     req.on("data", (chunk) => {
@@ -20,12 +27,10 @@ const postRouter = (req, res) => {
         router(req.url, res, JSON.parse(data))
     })
 }
-
 const getRouter = async (req, res) => {
     let splitUrl = parseUrl(req.url);
     await router(req.url, res, splitUrl.params)
 }
-
 const router = async (url, res, data) => {
     if (url.indexOf("~") > -1) {
         res.write(fetchPublicAssets(url));
