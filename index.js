@@ -1,6 +1,6 @@
 const http = require("http");
-const { parseUrl, fetchPublicAssets, View } = require("./core")
-const { createResponseObject } = require("./system");
+const { View } = require("./core")
+const { createResponseObject, parseUrl, fetchPublicAssets, } = require("./system");
 
 http.createServer((req, res) => {
     if (req.method === "POST") {
