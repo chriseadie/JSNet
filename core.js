@@ -1,10 +1,6 @@
 
 var nunjucks = require("nunjucks")
 nunjucks.configure("Views", { autoescape: true })
-
-
-
-
 module.exports = {
     View: function (view, model) {
         var template = nunjucks.render(view, model)
