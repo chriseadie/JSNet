@@ -8,7 +8,7 @@
     "devserver": "nodemon index.js",
     "start": "node index.js"
   },
-  "author": "",
+  "author": "Christopher Eadie",
   "license": "ISC",
   "dependencies": {
     "nodemailer": "^6.4.8",
