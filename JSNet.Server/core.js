@@ -1,4 +1,3 @@
-
 var nunjucks = require("nunjucks")
 nunjucks.configure("Views", { autoescape: true })
 module.exports = {
