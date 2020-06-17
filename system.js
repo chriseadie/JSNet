@@ -1,4 +1,5 @@
 var fs = require("fs");
+let Config = require("./JSNet/Configure");
 const splitParams = (arr) => {
     return arr.splice(2, arr.length)
 }
@@ -21,6 +22,7 @@ const setDefaultHeaders = (response) => {
 module.exports = {
     createResponseObject,
     setDefaultHeaders,
+    Config,
     parseUrl: function (url) {
         var urlArr = url.slice(1).split("/");
         return {
