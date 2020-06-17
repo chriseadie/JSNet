@@ -1,6 +1,6 @@
 const { RedirectToAction, Ok, BadRequest } = require("../JSNet.Server/core");
 
-describe("View", () => {
+describe("Core Js Tests", () => {
 
     it("Tests the redirect Response", () => {
         var redirect = RedirectToAction("/about")
