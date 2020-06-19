@@ -24,7 +24,7 @@ export async function createJSNetServer(options) {
     const currentFileUrl = import.meta.url;
     const templateDir = path.resolve(
         new URL(currentFileUrl).pathname,
-        "../../../JSNet.Server");
+        "../../JSNet.Server");
     const realpath = templateDir.slice(3)
     options.templateDirectory = realpath;
     console.log(options)
