@@ -12,12 +12,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chriseadie/JSNet.git"
+  },
   "keywords": [
     "cli",
     "jsnet"
   ],
   "author": "Christopher Eadie",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chriseadie/JSNet/issues"
+  },
   "dependencies": {
     "arg": "^4.1.3",
     "chalk": "^4.1.0",
@@ -26,5 +33,10 @@
     "listr": "^0.14.3",
     "ncp": "^2.0.0",
     "pkg-install": "^1.0.0"
-  }
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "JSNet.Server/"
+  ]
 }
