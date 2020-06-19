@@ -1,5 +1,6 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
+import { createJSNetServer } from './main';
 
 function parseArgumentsIntoOptions(rawArgs) {
     const args = arg({
@@ -47,5 +48,5 @@ async function promptForMissingOptions(options) {
 export async function cli(args) {
     let options = parseArgumentsIntoOptions(args);
     options = await promptForMissingOptions(options);
-    console.log(options)
+    await createJSNetServer(options);
 }

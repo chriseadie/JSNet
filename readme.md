@@ -5,11 +5,12 @@ This server uses js classes with response types such as View() and Ok() in order
 
 It is still in the early stages of development
 
-Nunjucks has been included as the only dependency thus far to allow templating on html documents
+Dependencies for this project include
+ - Nunjucks
+ - NodeMailer
 
 
-I am planing to turn this into a cli to make it much easer to manage and get started. creating action for initiating a project as well as adding controller or views
+Cli has been added to project. server can now be installed by running
+jsnet-cli --install you will then choose Javascript (the only version available right now) and it will install all the server files,
 
-
-implementing node cli for easy install following this tutorial
-[How to build cli with node js](https://www.twilio.com/blog/how-to-build-a-cli-with-node-js)
+To start the server just type into the console npm run start

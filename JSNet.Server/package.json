@@ -1,5 +1,5 @@
 {
-  "name": "jnet",
+  "name": "jsnet",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,10 @@
     "devserver": "nodemon index.js",
     "start": "node index.js"
   },
-  "author": "Christopher Eadie",
+  "author": "JSNet",
   "license": "ISC",
   "dependencies": {
     "nodemailer": "^6.4.8",
     "nunjucks": "^3.2.1"
-  },
-  "peerDependencies": {
-    "nunjucks": "3.2.1"
   }
 }
