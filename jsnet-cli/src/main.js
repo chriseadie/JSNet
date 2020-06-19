@@ -23,13 +23,11 @@ export async function createJSNetServer(options) {
 
     const currentFileUrl = import.meta.url;
     const templateDir = path.resolve(
-        new URL(currentFileUrl).pathname,
+        decodeURI(new URL(currentFileUrl).pathname).substring(decodeURI(new URL(currentFileUrl).pathname).indexOf('/') + 1),
         "../../JSNet.Server");
-    const realpath = templateDir.slice(3)
-    options.templateDirectory = realpath;
-    console.log(options)
+    options.templateDirectory = templateDir;
     try {
-        await access(realpath, fs.constants.R_OK);
+        await access(templateDir, fs.constants.R_OK);
     } catch (err) {
         console.error("%s Invalid template", chalk.red.bold("Error"))
         process.exit(1);
