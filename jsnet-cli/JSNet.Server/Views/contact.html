@@ -1,14 +1,28 @@
-<html lang="en">
+{% extends "./shared/layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Page - index</title>
-</head>
+{% block bodyContent %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <div class="container">
+            <li class="breadcrumb-item active" aria-current="page">Contact</li>
+        </div>
+    </ol>
+</nav>
+<div class="container">
+    <h1>Welcome to the contact page</h1>
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Comment</label>
+            <textarea type="text" class="form-control" id="comment input"></textarea>
+        </div>
 
-<body>
-    <h1>This is being server from a class</h1>
-    <h1>This is also the contact page</h1>
-</body>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
-</html>
+{% endblock %}
