@@ -9,6 +9,14 @@ module.exports = {
             body: template
         }
     },
+    NotFound: function (view, model) {
+        var template = nunjucks.render(view, model)
+        return {
+            statusCode: 404,
+            type: { "Context-Type": "text/html" },
+            body: template
+        }
+    },
     RedirectToAction: function (redirectUrl) {
         return {
             statusCode: 301,

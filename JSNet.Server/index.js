@@ -1,5 +1,6 @@
 const http = require("http");
-const { View } = require("./core")
+const url = require("url");
+const { NotFound } = require("./core")
 const { createResponseObject, parseUrl, fetchPublicAssets, setDefaultHeaders, Config } = require("./system");
 
 function ConfigureServices() {
@@ -32,20 +33,24 @@ function Configure() {
         })
     }
     const getRouter = async (req, res) => {
-        let splitUrl = parseUrl(req.url);
-        await router(req.url, res, splitUrl.params)
+        var route = url.parse(req.url, true);
+        if (route.query) {
+            await router(route.pathname, res, route.query)
+        } else {
+            await router(route.pathname, res)
+        }
     }
     const router = async (url, res, data) => {
         if (url.indexOf("~") > -1) {
             res.write(fetchPublicAssets(url));
         } else {
-            let getModule = parseUrl(url);
-            let instance = await require(`./Controllers/${getModule.controller}.js`)
-            let i = new instance();
-            if (typeof i[getModule.method] === 'function') {
-                createResponseObject(res, i[getModule.method](data))
-            } else {
-                res.write(View("404.html"))
+            try {
+                let getModule = parseUrl(url);
+                let instance = await require(`./Controllers/${getModule.controller}.js`)
+                let i = new instance();
+                createResponseObject(res, i[getModule.method]({ ...data }))
+            } catch (err) {
+                createResponseObject(res, NotFound("404.html"))
             }
         }
         return res.end()

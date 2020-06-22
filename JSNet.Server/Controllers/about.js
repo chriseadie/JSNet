@@ -1,11 +1,12 @@
 const { View, Ok, BadRequest, RedirectToAction } = require("../core");
 
 class AboutController {
-    index() {
+    index({ id, entityId }) {
+        console.log(id, entityId)
         return View("about.html")
     }
-    candidate(id) {
-        let candidateId = { id: id[0] }
+    candidate({ id }) {
+        let candidateId = { id: id }
         return View("candidate.html", candidateId)
     }
     redirectToCandidate() {
