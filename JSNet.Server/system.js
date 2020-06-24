@@ -11,16 +11,35 @@ const createResponseObject = (response, options) => {
         return response.end()
     } else {
         response.writeHead(options.statusCode, {
-            "content-type": options.type
+            "Content-Type": options.type
         })
         return response.write(options.body)
     }
+}
+const assignStaticFileHeaders = (res, url) => {
+    if (url.indexOf("serviceworker.js") > -1) {
+        res.writeHead(200, {
+            "Content-Type": "text/javascript",
+            "Service-Worker-Allowed": "/"
+        })
+    } else if (url.indexOf(".js") > -1) {
+        res.writeHead(200, {
+            "Content-Type": "text/javascript"
+        })
+    }
+    if (url.indexOf(".css") > -1) {
+        res.writeHead(200, {
+            "Content-Type": "text/css"
+        })
+    }
+    return res;
 }
 const setDefaultHeaders = (response) => {
     response.setHeader("x-powered-by", "JSNet")
 }
 module.exports = {
     createResponseObject,
+    assignStaticFileHeaders,
     setDefaultHeaders,
     Config,
     parseUrl: function (url) {
@@ -50,7 +69,6 @@ module.exports = {
     fetchPublicAssets: function (path) {
         pathArr = path.split("~")
         let pathToAsset = pathArr[1];
-        console.log(path)
         var file = fs.readFileSync(`./wwwroot${pathToAsset}`, (err, data) => {
             return data;
         })

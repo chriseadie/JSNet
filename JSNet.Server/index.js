@@ -1,7 +1,14 @@
 const http = require("http");
 const url = require("url");
 const { NotFound } = require("./core")
-const { createResponseObject, parseUrl, fetchPublicAssets, setDefaultHeaders, Config } = require("./system");
+const {
+    assignStaticFileHeaders,
+    createResponseObject,
+    parseUrl,
+    fetchPublicAssets,
+    setDefaultHeaders,
+    Config
+} = require("./system");
 
 function ConfigureServices() {
     var app = new Config();
@@ -42,16 +49,7 @@ function Configure() {
     }
     const router = async (url, res, data) => {
         if (url.indexOf("~") > -1) {
-            if (url.indexOf(".js") > -1) {
-                res.writeHead(200, {
-                    "Content-Type": "text/javascript"
-                })
-            }
-            if (url.indexOf(".css") > -1) {
-                res.writeHead(200, {
-                    "Content-Type": "text/css"
-                })
-            }
+            assignStaticFileHeaders(res, url)
             res.write(fetchPublicAssets(url));
         } else {
             try {
