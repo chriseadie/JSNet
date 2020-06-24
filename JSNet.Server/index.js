@@ -42,6 +42,16 @@ function Configure() {
     }
     const router = async (url, res, data) => {
         if (url.indexOf("~") > -1) {
+            if (url.indexOf(".js") > -1) {
+                res.writeHead(200, {
+                    "Content-Type": "text/javascript"
+                })
+            }
+            if (url.indexOf(".css") > -1) {
+                res.writeHead(200, {
+                    "Content-Type": "text/css"
+                })
+            }
             res.write(fetchPublicAssets(url));
         } else {
             try {

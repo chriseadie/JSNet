@@ -48,7 +48,9 @@ module.exports = {
         return cookieList.join("; ")
     },
     fetchPublicAssets: function (path) {
-        let pathToAsset = path.slice(2);
+        pathArr = path.split("~")
+        let pathToAsset = pathArr[1];
+        console.log(path)
         var file = fs.readFileSync(`./wwwroot${pathToAsset}`, (err, data) => {
             return data;
         })
