@@ -14,3 +14,5 @@ Cli has been added to project. server can now be installed by running
 jsnet-cli --install you will then choose Javascript (the only version available right now) and it will install all the server files,
 
 To start the server just type into the console npm run start
+
+This server has been designed to act as a quick development server for api usage or to server html webpages
