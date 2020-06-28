@@ -22,7 +22,7 @@ export async function createJSNetServer(options) {
     };
 
     const currentFileUrl = import.meta.url;
-    const templateDir;
+    let templateDir;
     if (process.platform === "win32") {
         templateDir = path.resolve(
             decodeURI(new URL(currentFileUrl).pathname).substring(decodeURI(new URL(currentFileUrl).pathname).indexOf('/') + 1),

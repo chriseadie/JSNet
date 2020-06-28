@@ -37,6 +37,11 @@
 
         {% endblock %}
     </div>
+    <script>
+        if (navigator.serviceWorker) {
+            navigator.serviceWorker.register('~/serviceworker.js', { scope: '/' })
+        }
+    </script>
 </body>
 
 </html>
