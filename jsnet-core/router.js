@@ -44,7 +44,11 @@ const router = async (url, response, data) => {
             let createControllerInstance = new loadControllerModule();
             createResponseObject(response, createControllerInstance[controllerPath.method]({ ...data }))
         } catch (err) {
-            createResponseObject(response, "500: Internal Server Error")
+            createResponseObject(response, {
+                statusCode: 500,
+                type: "document",
+                body: err.toString()
+            })
         }
     }
     return response.end()
