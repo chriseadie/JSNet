@@ -1,4 +1,4 @@
-const { View } = require("../core");
+const { View } = require("jsnet-core");
 
 class ContactController {
     index() {

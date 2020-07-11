@@ -10,9 +10,9 @@ const access = promisify(fs.access);
 const copy = promisify(ncp);
 
 async function copyTemplateFiles(options) {
-    return copy(options.templateDirectory, options.targetDirectory, {
-        clobber: false
-    });
+    // return copy(options.templateDirectory, options.targetDirectory, {
+    //     clobber: false
+    // });
 }
 
 export async function createJSNetServer(options) {
@@ -26,10 +26,10 @@ export async function createJSNetServer(options) {
     if (process.platform === "win32") {
         templateDir = path.resolve(
             decodeURI(new URL(currentFileUrl).pathname).substring(decodeURI(new URL(currentFileUrl).pathname).indexOf('/') + 1),
-            "../../JSNet.Server");
+            `../../${options.application}/${options.template}`);
     } else {
         templateDir = path.resolve(new URL(currentFileUrl).pathname,
-            "../../JSNet.Server")
+            `../../${options.application}/${options.template}`)
     }
     options.templateDirectory = templateDir;
     try {

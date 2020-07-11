@@ -35,7 +35,7 @@ async function promptForMissingOptions(options) {
         questions.push({
             type: "list",
             name: "application",
-            message: "Please choose which application you want to build",
+            message: "Please choose which application you want",
             choices: ["JSNet.Framework", "JSNet.Api"],
             default: defaultApplication
         })

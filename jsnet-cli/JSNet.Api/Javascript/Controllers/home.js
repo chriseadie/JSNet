@@ -1,8 +1,8 @@
-const { View } = require("../core");
+const { Ok } = require("jsnet-core");
 class HomeController {
     index() {
         const model = { foo: "bar stool", arr: [{ name: "steve" }, { name: "Jay" }] };
-        return View("index.html", model)
+        return Ok(model)
     }
 }
 module.exports = HomeController;
