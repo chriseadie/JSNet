@@ -1,6 +1,6 @@
 {
   "name": "jsnet-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Core modules required for jsnet framework",
   "main": "index.js",
   "repository": {
@@ -15,8 +15,12 @@
     "core",
     "jsnet"
   ],
-  "author": "Christopher",
+  "author": "JSNet",
   "license": "MIT",
+  "dependencies": {
+    "nodemailer": "^6.4.8",
+    "nunjucks": "^3.2.1"
+  },
   "bugs": {
     "url": "https://github.com/chriseadie/JSNet/issues"
   }
