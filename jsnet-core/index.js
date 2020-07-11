@@ -3,7 +3,10 @@ const { List,
     Dictionary,
     HttpClient,
     CacheMem,
-    EmailClient, GlobalScope } = require("./Collections");
+    EmailClient,
+    GlobalScope,
+    Session
+} = require("./Collections");
 const routerSwitch = require("./router");
 const { Ok, BadRequest, RedirectToAction, NotFound, View } = require("./core");
 
@@ -24,5 +27,6 @@ module.exports = {
     HttpClient,
     CacheMem,
     EmailClient,
-    GlobalScope
+    GlobalScope,
+    Session
 }
