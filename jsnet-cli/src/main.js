@@ -25,10 +25,10 @@ export async function createJSNetServer(options) {
     if (process.platform === "win32") {
         templateDir = path.resolve(
             decodeURI(new URL(currentFileUrl).pathname).substring(decodeURI(new URL(currentFileUrl).pathname).indexOf('/') + 1),
-            `../../${options.application}/${options.template}/`);
+            `../../${options.application}/${options.template}`);
     } else {
         templateDir = path.resolve(new URL(currentFileUrl).pathname,
-            `../../${options.application}/${options.template}/`)
+            `../../${options.application}/${options.template}`)
     }
     options.templateDirectory = templateDir;
     try {
