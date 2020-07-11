@@ -1,8 +1,8 @@
 class Configure {
-    addSingleton(key, value) {
+    addToGlobalScope(key, value) {
         global[key] = new value();
     }
-    destroySingleton(key) {
+    destroyFromGlobalScope(key) {
         delete global[key];
     }
 }

@@ -20,7 +20,7 @@ export async function createJSNetServer(options) {
         ...options,
         targetDirectory: options.targetDirectory || process.cwd()
     };
-
+    console.log(options)
     const currentFileUrl = import.meta.url;
     let templateDir;
     if (process.platform === "win32") {
@@ -54,7 +54,7 @@ export async function createJSNetServer(options) {
                 ? "Pass -i or --install to automatically install " : undefined,
         }
     ])
-    await tasks.run()
+    //await tasks.run()
     console.log("%s Server is ready", chalk.green.bold("DONE"))
     return true;
 }

@@ -1,9 +1,10 @@
 const url = require("url");
 const path = require("path");
-const { BadRequest } = require("./core")
 const {
+    assignStaticFileHeaders,
     createResponseObject,
     parseUrl,
+    fetchPublicAssets,
 } = require("./system");
 
 const routerSwitch = (request, response) => {
@@ -33,14 +34,18 @@ const getRouter = async (request, response) => {
     }
 }
 const router = async (url, response, data) => {
-    try {
-        console.log(path.resolve(__dirname))
-        let controllerPath = parseUrl(url);
-        let loadControllerModule = await require(`./Controllers/${controllerPath.controller}.js`)
-        let createControllerInstance = new loadControllerModule();
-        createResponseObject(response, createControllerInstance[controllerPath.method]({ ...data }))
-    } catch (err) {
-        createResponseObject(response, BadRequest())
+    if (url.indexOf("~") > -1) {
+        assignStaticFileHeaders(response, url)
+        response.write(fetchPublicAssets(url));
+    } else {
+        try {
+            let controllerPath = parseUrl(url);
+            let loadControllerModule = await require(path.resolve(__dirname + `../../../Controllers/${controllerPath.controller}.js`));
+            let createControllerInstance = new loadControllerModule();
+            createResponseObject(response, createControllerInstance[controllerPath.method]({ ...data }))
+        } catch (err) {
+            createResponseObject(response, "500: Internal Server Error")
+        }
     }
     return response.end()
 }

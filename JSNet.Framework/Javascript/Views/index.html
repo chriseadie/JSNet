@@ -1,0 +1,22 @@
+{% extends "./shared/layout.html" %}
+
+{% block bodyContent %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <div class="container">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+        </div>
+    </ol>
+</nav>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">JSNet Server</h1>
+        <p class="lead">This is a simple node server inspired by the MVC framework</p>
+        <hr class="my-4">
+        <p>It uses class methods for rendering views to the browser</p>
+        <p>This server also comes with Nunjucks as standard for templating in html</p>
+        <a class="btn btn-primary btn-lg" href="https://github.com/chriseadie/JSNet/wiki" role="button">Learn more</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 {
   "name": "jsnet-cli",
   "version": "1.1.5",
-  "description": "A cli to create the JSNet server",
+  "description": "A cli to create the JSNet Framework or Api Server",
   "main": "src/index.js",
   "bin": {
     "jsnet-cli": "bin/jsnet"
@@ -20,7 +20,7 @@
     "cli",
     "jsnet"
   ],
-  "author": "Christopher Eadie",
+  "author": "Christopher",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/chriseadie/JSNet/issues"

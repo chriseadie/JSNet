@@ -1,6 +1,22 @@
 var nunjucks = require("nunjucks")
 nunjucks.configure("Views", { autoescape: true })
 module.exports = {
+    View: function (view, model) {
+        var template = nunjucks.render(view, model)
+        return {
+            statusCode: 200,
+            type: "text/html",
+            body: template
+        }
+    },
+    NotFound: function (view, model) {
+        var template = nunjucks.render(view, model)
+        return {
+            statusCode: 404,
+            type: "text/html",
+            body: template
+        }
+    },
     RedirectToAction: function (redirectUrl) {
         return {
             statusCode: 301,

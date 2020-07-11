@@ -1,11 +1,8 @@
 const http = require("http");
-const url = require("url");
-const { setDefaultHeaders, Config } = require("./system");
-const routerSwitch = require("./router");
+const { routerSwitch, setDefaultHeaders } = require("jsnet-core");
+
 
 function ConfigureServices() {
-    var app = new Config();
-    app.addSingleton("service", Object)
 }
 function Configure() {
     http.createServer((request, response) => {
