@@ -10,9 +10,9 @@ const access = promisify(fs.access);
 const copy = promisify(ncp);
 
 async function copyTemplateFiles(options) {
-    // return copy(options.templateDirectory, options.targetDirectory, {
-    //     clobber: false
-    // });
+    return copy(options.templateDirectory, options.targetDirectory, {
+        clobber: false
+    });
 }
 
 export async function createJSNetServer(options) {
@@ -20,16 +20,15 @@ export async function createJSNetServer(options) {
         ...options,
         targetDirectory: options.targetDirectory || process.cwd()
     };
-    console.log(options)
     const currentFileUrl = import.meta.url;
     let templateDir;
     if (process.platform === "win32") {
         templateDir = path.resolve(
             decodeURI(new URL(currentFileUrl).pathname).substring(decodeURI(new URL(currentFileUrl).pathname).indexOf('/') + 1),
-            `../../${options.application}/${options.template}`);
+            `../../${options.application}/${options.template}/`);
     } else {
         templateDir = path.resolve(new URL(currentFileUrl).pathname,
-            `../../${options.application}/${options.template}`)
+            `../../${options.application}/${options.template}/`)
     }
     options.templateDirectory = templateDir;
     try {
@@ -54,7 +53,7 @@ export async function createJSNetServer(options) {
                 ? "Pass -i or --install to automatically install " : undefined,
         }
     ])
-    //await tasks.run()
+    await tasks.run()
     console.log("%s Server is ready", chalk.green.bold("DONE"))
     return true;
 }
