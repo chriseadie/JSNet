@@ -5,7 +5,8 @@ const { List,
     CacheMem,
     EmailClient,
     GlobalScope,
-    Session
+    Session,
+    Singleton
 } = require("./Collections");
 const routerSwitch = require("./router");
 const { Ok, BadRequest, RedirectToAction, NotFound, View } = require("./core");
@@ -28,5 +29,6 @@ module.exports = {
     CacheMem,
     EmailClient,
     GlobalScope,
-    Session
+    Session,
+    Singleton
 }

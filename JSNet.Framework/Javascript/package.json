@@ -11,6 +11,6 @@
   "author": "JSNet",
   "license": "ISC",
   "dependencies": {
-    "jsnet-core": "^1.0.3"
+    "jsnet-core": "^1.0.5"
   }
 }

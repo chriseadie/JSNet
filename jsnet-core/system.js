@@ -4,6 +4,12 @@ const splitParams = (arr) => {
     return arr.splice(2, arr.length)
 }
 const createResponseObject = (response, options) => {
+    if(response.getHeader("Location")){
+        response.writeHead(302, {
+            "Location": response.getHeader("Location")
+        })
+        return response.end()
+    }
     if (options.statusCode === 301) {
         response.writeHead(options.statusCode, {
             "Location": options.redirect

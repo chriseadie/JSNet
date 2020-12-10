@@ -5,6 +5,7 @@ let HttpClient = require("./JSNet/HttpClient");
 let Dictionary = require("./JSNet/Dictionary");
 let GlobalScope = require("./JSNet/Configure");
 let Session = require("./JSNet/Sessions");
+let Singleton = require("./JSNet/Singleton");
 module.exports = {
     List,
     Dictionary,
@@ -12,5 +13,6 @@ module.exports = {
     CacheMem,
     EmailClient,
     GlobalScope,
-    Session
+    Session,
+    Singleton
 }

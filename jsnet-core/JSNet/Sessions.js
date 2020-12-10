@@ -1,7 +1,18 @@
-const {parseCookies} = require("../system")
+const {parseCookies,useCookies} = require("../system")
 class Session {
     constructor() {
         this.session = {};
+        this.sessionSettings = {
+            timeoutPeriod:30000,
+            isActive:false,
+            path:"/"
+        }
+    }
+
+    createSession({timeout,isActive,path}){
+        this.sessionSettings.timeoutPeriod = timeout;
+        this.sessionSettings.isActive = isActive;
+        this.sessionSettings.path = path;
     }
     createSessionId() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -9,45 +20,48 @@ class Session {
             return v.toString(16);
         });
     }
-    setSession({timeout,route,res}) {
+    getSessionId(req){
+        var sessionCookie = parseCookies(req);
+        if(sessionCookie.session){
+            return sessionCookie.session
+        }
+        return ""
+    }
+    setSession({res,req}) {
+        var id = this.getSessionId(req);
         if(!this.session[id]){
             const id = this.createSessionId();
-            const date = new Date().setTime(timeout);
-            item
+            const date = new Date()
+            date.setTime(date.getTime() + this.sessionSettings.timeoutPeriod);
             this.session[id] = {
-                timeout,
-                route,
                 id,
                 expiryDate:date
             }
             const cookieToSet = useCookies({session:id})
-            res.writeHead(200,{
-                "Set-Cookie":cookieToSet
-            })
+            res.setHeader("Set-Cookie",cookieToSet);
         }
     }
     destroySession(id) {
         delete this.session[id];
     }
-    updateSessionTimeout(id) {
+    updateSessionTimeout(id,newData) {
         if(this.session[id]){
             this.session[id] = { ...this.session[id], ...newData }
         }
     }
     validateSession(req,res){
         var sessionCookie = parseCookies(req);
-        if(sessionCookie.session){
-            var currentDate = new Date().getTime();
-            if(currentDate > this.session[sessionCookie.session].expiryDate){
-                res.writeHead(302,{
-                    "Location":this.session[sessionCookie.session].route
-                })
+        if(sessionCookie.session && this.session[sessionCookie.session]){
+            const gt = new Date(this.session[sessionCookie.session].expiryDate)
+            if(Date.now() > gt.getTime()){
+                res.setHeader("Location",this.sessionSettings.path);
+                res.setHeader("Set-Cookie","")
             } else {
-                var sessionExpiry = new Date().setTime(this.session[sessionCookie.session].timeout)
-                updateSessionTimeout(id,{expiryDate:sessionExpiry})
+                var sessionExpiry = new Date()
+                sessionExpiry.setTime(sessionExpiry.getTime() + this.sessionSettings.timeoutPeriod)
+                this.updateSessionTimeout(sessionCookie.session,{expiryDate:sessionExpiry})
             }
         }
     }
 }
-var session = new Session();
-module.exports = {session}
+module.exports = new Session();

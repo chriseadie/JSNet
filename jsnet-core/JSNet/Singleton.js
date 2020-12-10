@@ -13,7 +13,5 @@ class Singleton {
         return this.singltons[key];
     }
 }
-var singleton = new Singleton();
-module.exports = {
-    singleton
-}
+
+module.exports = new Singleton();

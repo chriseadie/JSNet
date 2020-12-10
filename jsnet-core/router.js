@@ -6,7 +6,7 @@ const {
     parseUrl,
     fetchPublicAssets,
 } = require("./system");
-const {singleton} = require("./JSNet/Singleton")
+const {Singleton,Session} = require("./Collections")
 
 const routerSwitch = (request, response) => {
     if (request.method === "POST") {
@@ -23,26 +23,33 @@ const postRouter = (request, response) => {
         body.push(chunk)
     }).on("end", () => {
         let postBodyData = Buffer.concat(body).toString();
-        router(request.url, response, JSON.parse(postBodyData))
+        router(request.url, response,request, JSON.parse(postBodyData))
     })
 }
 const getRouter = async (request, response) => {
     var route = url.parse(request.url, true);
     if (route.query) {
-        await router(route.pathname, response, route.query)
+        await router(route.pathname, response, request, route.query)
     } else {
-        await router(route.pathname, response)
+        await router(route.pathname, response,request)
     }
 }
-const router = async (url, response, data) => {
+const router = async (url, response, request, data) => {
     if (url.indexOf("~") > -1) {
         assignStaticFileHeaders(response, url)
         response.write(fetchPublicAssets(url));
     } else {
+        if(Session.sessionSettings.isActive){
+            Session.setSession({
+                req:request,
+                res:response
+            })
+            Session.validateSession(request,response)
+        }
         try {
             let controllerPath = parseUrl(url);
             let loadControllerModule = await require(path.resolve(__dirname + `../../../Controllers/${controllerPath.controller}.js`));
-            let {dependencies} = injectDependencies(loadControllerModule);
+            let dependencies = injectDependencies(loadControllerModule);
             let createControllerInstance = new loadControllerModule(...dependencies);
             createResponseObject(response, createControllerInstance[controllerPath.method]({ ...data }))
         } catch (err) {
@@ -58,14 +65,17 @@ const router = async (url, response, data) => {
 
 const injectDependencies = (loadControllerModule) => {
     var di = loadControllerModule.toString().split(/constructor\s*[^\(]*\(\s*([^\)]*)\)/m);
-    var injecables = di[1].split(",")
+    if(di.length > 1){
+        var injecables = di[1].split(",")
 
-    var dependencies = []
-    injecables.forEach(dep => {
-        const dependencyKey = dep.trim()
-        dependencies.push(singleton.get(dependencyKey));
-    })
-    return dependencies
+        var dependencies = []
+        injecables.forEach(dep => {
+            const dependencyKey = dep.trim()
+            dependencies.push(Singleton.get(dependencyKey));
+        })
+        return dependencies
+    }
+    return new Array();
 }
 
 module.exports = routerSwitch;
