@@ -6,6 +6,7 @@ const {
     parseUrl,
     fetchPublicAssets,
 } = require("./system");
+const {singleton} = require("./JSNet/Singleton")
 
 const routerSwitch = (request, response) => {
     if (request.method === "POST") {
@@ -41,7 +42,8 @@ const router = async (url, response, data) => {
         try {
             let controllerPath = parseUrl(url);
             let loadControllerModule = await require(path.resolve(__dirname + `../../../Controllers/${controllerPath.controller}.js`));
-            let createControllerInstance = new loadControllerModule();
+            let {dependencies} = injectDependencies(loadControllerModule);
+            let createControllerInstance = new loadControllerModule(...dependencies);
             createResponseObject(response, createControllerInstance[controllerPath.method]({ ...data }))
         } catch (err) {
             createResponseObject(response, {
@@ -52,6 +54,18 @@ const router = async (url, response, data) => {
         }
     }
     return response.end()
+}
+
+const injectDependencies = (loadControllerModule) => {
+    var di = loadControllerModule.toString().split(/constructor\s*[^\(]*\(\s*([^\)]*)\)/m);
+    var injecables = di[1].split(",")
+
+    var dependencies = []
+    injecables.forEach(dep => {
+        const dependencyKey = dep.trim()
+        dependencies.push(singleton.get(dependencyKey));
+    })
+    return dependencies
 }
 
 module.exports = routerSwitch;

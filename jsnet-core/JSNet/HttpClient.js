@@ -1,41 +1,18 @@
-const https = require("https");
-const url = require("url");
+const superagent = require('superagent');
 class HttpClient {
     constructor() {
     }
-    get(url, callback) {
-        https.get(url, resp => {
-            let data = '';
-            resp.on("data", (chunk) => {
-                data += chunk
-            })
-            resp.on("end", () => {
-                return callback(JSON.parse(data))
-            })
-        })
+    get(url) {
+        return superagent.get(url);
     }
-    post(postLink, payload, callback) {
-        const data = JSON.stringify(payload)
-        var args = url.parse(postLink, true);
-        let options = {
-            hostname: args.host,
-            path: args.path,
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': data.length
-            }
-        }
-        const req = https.request(options, (res) => {
-            let data = '';
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-            res.on("end", () => {
-                return callback(JSON.parse(data));
-            })
-        });
-        req.write(data)
+    post(url, payload,type = "application/json") {
+        return superagent.post(url).type(type).send(payload);
+    }
+    put(url, payload,type = "application/json"){
+        return superagent.put(url).type(type).send(payload);
+    }
+    delete(url){
+        return superagent.delete(url);
     }
 }
 module.exports = HttpClient;

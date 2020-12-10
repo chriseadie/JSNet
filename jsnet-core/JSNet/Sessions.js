@@ -1,3 +1,4 @@
+const {parseCookies} = require("../system")
 class Session {
     constructor() {
         this.session = {};
@@ -8,19 +9,45 @@ class Session {
             return v.toString(16);
         });
     }
-    getSessionById(id) {
-        return this.session[id];
-    }
-    setSession(data) {
-        const id = this.createSessionId();
-        this.session[id] = data;
-        return id;
+    setSession({timeout,route,res}) {
+        if(!this.session[id]){
+            const id = this.createSessionId();
+            const date = new Date().setTime(timeout);
+            item
+            this.session[id] = {
+                timeout,
+                route,
+                id,
+                expiryDate:date
+            }
+            const cookieToSet = useCookies({session:id})
+            res.writeHead(200,{
+                "Set-Cookie":cookieToSet
+            })
+        }
     }
     destroySession(id) {
         delete this.session[id];
     }
-    updateSessionData(id, newData) {
-        this.session[id] = { ...this.session[id], ...newData }
+    updateSessionTimeout(id) {
+        if(this.session[id]){
+            this.session[id] = { ...this.session[id], ...newData }
+        }
+    }
+    validateSession(req,res){
+        var sessionCookie = parseCookies(req);
+        if(sessionCookie.session){
+            var currentDate = new Date().getTime();
+            if(currentDate > this.session[sessionCookie.session].expiryDate){
+                res.writeHead(302,{
+                    "Location":this.session[sessionCookie.session].route
+                })
+            } else {
+                var sessionExpiry = new Date().setTime(this.session[sessionCookie.session].timeout)
+                updateSessionTimeout(id,{expiryDate:sessionExpiry})
+            }
+        }
     }
 }
-module.exports = new Session();
+var session = new Session();
+module.exports = {session}
