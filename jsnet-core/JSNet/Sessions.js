@@ -1,4 +1,6 @@
 const {parseCookies,useCookies} = require("../system")
+const url = require("url")
+
 class Session {
     constructor() {
         this.session = {};
@@ -54,8 +56,11 @@ class Session {
         if(sessionCookie.session && this.session[sessionCookie.session]){
             const gt = new Date(this.session[sessionCookie.session].expiryDate)
             if(Date.now() > gt.getTime()){
-                res.setHeader("Location",this.sessionSettings.path);
-                res.setHeader("Set-Cookie","")
+                const route = url.parse(req)
+                if(route.pathname !== this.settingSession.path){
+                  res.setHeader("Location",this.sessionSettings.path);
+                  res.setHeader("Set-Cookie","")
+                }
             } else {
                 var sessionExpiry = new Date()
                 sessionExpiry.setTime(sessionExpiry.getTime() + this.sessionSettings.timeoutPeriod)
