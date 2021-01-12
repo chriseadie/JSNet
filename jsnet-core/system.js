@@ -1,9 +1,12 @@
 var fs = require("fs");
 let Config = require("./JSNet/Configure");
+
 const splitParams = (arr) => {
     return arr.splice(2, arr.length)
 }
-const createResponseObject = (response, options) => {
+
+module.exports = {
+    createResponseObject:function (response, options) => {
     if(response.getHeader("Location")){
         response.writeHead(302, {
             "Location": response.getHeader("Location")
@@ -21,8 +24,8 @@ const createResponseObject = (response, options) => {
         })
         return response.write(options.body)
     }
-}
-const assignStaticFileHeaders = (res, url) => {
+    },
+    assignStaticFileHeaders: function  (res, url) => {
     if (url.indexOf("serviceworker.js") > -1) {
         res.writeHead(200, {
             "Content-Type": "text/javascript",
@@ -39,14 +42,10 @@ const assignStaticFileHeaders = (res, url) => {
         })
     }
     return res;
-}
-const setDefaultHeaders = (response) => {
+    },
+    setDefaultHeaders: function  (response) => {
     response.setHeader("x-powered-by", "JSNet")
-}
-module.exports = {
-    createResponseObject,
-    assignStaticFileHeaders,
-    setDefaultHeaders,
+    },
     Config,
     parseUrl: function (url) {
         var urlArr = url.slice(1).split("/");
