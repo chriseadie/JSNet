@@ -56,7 +56,7 @@ class Session {
         if(sessionCookie.session && this.session[sessionCookie.session]){
             const gt = new Date(this.session[sessionCookie.session].expiryDate)
             if(Date.now() > gt.getTime()){
-                const route = url.parse(req)
+                const route = url.parse(req.url,true);
                 if(route.pathname !== this.settingSession.path){
                   res.setHeader("Location",this.sessionSettings.path);
                   res.setHeader("Set-Cookie","")
